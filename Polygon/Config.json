@@ -1,0 +1,4 @@
+{
+  "RequestOsmUrl": "https://nominatim.openstreetmap.org/search.php?q=",
+  "FormatResponse": "&polygon_geojson=1&format=json"
+}
