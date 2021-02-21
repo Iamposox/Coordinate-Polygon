@@ -7,13 +7,15 @@ using Polygon.Configuration;
 using Polygon.GeoServices.Interface;
 
 namespace Polygon.GeoServices {
-    public class OsmService : IServices<OsmService> {
-        private OsmGeocoder _geocoder;
-        private Config _config;
+    public class OsmService : IServices {
+        private readonly OsmGeocoder _geocoder;
+        private readonly Config _config;
+        private readonly WebClient _webClient;
 
-        public OsmService(OsmGeocoder geocoder, Config config) {
+        public OsmService(OsmGeocoder geocoder, Config config, WebClient webClient) {
             _geocoder = geocoder;
             _config = config;
+            _webClient = webClient;
         }
 
         public async Task<List<string>> GetPolygon(string address) {
@@ -23,9 +25,8 @@ namespace Polygon.GeoServices {
         }
 
         private async Task<string> DownloadString(string url) {
-            using WebClient wc = new WebClient();
-            wc.Headers.Add(HttpRequestHeader.UserAgent, ".NET Core Test Client");
-            return await wc.DownloadStringTaskAsync(url);
+            _webClient.Headers.Add(HttpRequestHeader.UserAgent, ".NET Core Test Client");
+            return await _webClient.DownloadStringTaskAsync(url);
         }
 
         private string UrlMakeValid(string address) =>

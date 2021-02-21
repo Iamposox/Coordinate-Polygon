@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Ninject;
 using NLog;
 using Polygon.BL.FileManager.Interface;
-using Polygon.GeoServices;
 using Polygon.GeoServices.Interface;
 using Polygon.IoC;
 using static System.Console;
@@ -14,7 +13,7 @@ namespace Polygon {
         public static async Task Main(string[] args) {
             try {
                 var kernel = new StandardKernel(new ServiceNinjectModule());
-                var osmService = kernel.Get<IServices<OsmService>>();
+                var osmService = kernel.Get<IServices>();
                 var fileManager = kernel.Get<IFileManager>();
 
                 Write("Введите адрес поиска: ");

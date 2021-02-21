@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Net;
+using Microsoft.Extensions.Configuration;
 using Ninject.Modules;
 using Polygon.BL.FileManager;
 using Polygon.BL.FileManager.Interface;
@@ -14,9 +15,10 @@ namespace Polygon.IoC {
             var config = GetConfiguration<Config>("Config.json");
             
             Bind<Config>().ToConstant(config);
-            Bind<IServices<OsmService>>().To<OsmService>().InSingletonScope();
+            Bind<IServices>().To<OsmService>().InSingletonScope();
             Bind<IOsmGeocoder>().To<OsmGeocoder>().InSingletonScope();
             Bind<IFileManager>().To<FileManager>().InSingletonScope();
+            Bind<WebClient>().ToMethod(x => new WebClient()).InSingletonScope();
         }
 
         private TKey GetConfiguration<TKey>(string fileName) where TKey : new() {
